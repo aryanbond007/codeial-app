@@ -15,45 +15,107 @@ module.exports.profile = async function(req, res){
 
 
 
-module.exports.update = async function(req, res){
+// module.exports.update = async function(req, res){
 
-    if(req.user.id == req.params.id){
-        try{  
-            let user = await User.findById(req.params.id);
-            User.uploadedAvatar(req,res,function(err){
-                if(err){
-                    console.log("Multer error ",err);
-                }
-                console.log(req.file);
-                user.name=req.body.name;
-                user.email=req.body.email;
-                if(req.file){
-                    //if avatar profile pic already availale then delete it using fs and path
-                    if(user.avatar){
-                        fs.unlinkSync(path.join(__dirname,"..",user.avatar));
+//     if(req.user.id == req.params.id){
+//         try{  
+//             let user = await User.findById(req.params.id);
+//             User.uploadedAvatar(req,res,function(err){
+//                 if(err){
+//                     console.log("Multer error ",err);
+//                 }
+//                 console.log(req.file);
+//                 user.name=req.body.name;
+//                 user.email=req.body.email;
+//                 if(req.file){
+//                     //if avatar profile pic already availale then delete it using fs and path
+//                     if(user.avatar){
+//                         fs.unlinkSync(path.join(__dirname,"..",user.avatar));
                         
-                    }
-                    user.avatar=User.avatarPath + '/' + req.file.filename;
-                    // user.avatar=req.file.path;
+//                     }
+//                     user.avatar=User.avatarPath + '/' + req.file.filename;
+//                     // user.avatar=req.file.path;
+//                 }
+//                 user.save();
+//                 return res.redirect("back");
+//             });
+
+
+//         } catch (err) {
+//             console.log(err);
+//             req.flash('error',err);
+//             return res.redirect("back");
+//         }
+//     } else {
+//         req.flash('error','Unauthorized')
+//         return res.status(401).send("Unauthorized");
+//     }
+
+
+
+// }
+
+module.exports.update = async function(req, res) {
+    if (req.user.id == req.params.id) {
+        try {
+            let user = await User.findById(req.params.id);
+            
+            // Using Multer to handle avatar upload
+            User.uploadedAvatar(req, res, function(err) {
+                if (err) {
+                    console.log("Multer error:", err);
+                    req.flash('error', 'Error uploading file');
+                    return res.redirect('back');
                 }
+
+                // Log the uploaded file (req.file)
+                console.log(req.file);
+
+                // Update user's name and email from the form submission
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                // Check if a new avatar is uploaded
+                if (req.file) {
+                    // If an avatar already exists, delete the old one
+                    if (user.avatar) {
+                        try {
+                            // Construct the path to the old avatar file
+                            let oldAvatarPath = path.join(__dirname, '..', user.avatar);
+                            
+                            // Check if file exists before attempting to delete
+                            if (fs.existsSync(oldAvatarPath)) {
+                                fs.unlinkSync(oldAvatarPath);
+                                console.log("Old avatar deleted:", oldAvatarPath);
+                            } else {
+                                console.log("Old avatar not found:", oldAvatarPath);
+                            }
+                        } catch (error) {
+                            console.error("Error deleting old avatar:", error);
+                        }
+                    }
+
+                    // Update the user's avatar path with the new uploaded file
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+
+                // Save the updated user information
                 user.save();
-                return res.redirect("back");
+
+                req.flash('success', 'Profile updated successfully!');
+                return res.redirect('back');
             });
-
-
         } catch (err) {
-            console.log(err);
-            req.flash('error',err);
-            return res.redirect("back");
+            console.log("Error:", err);
+            req.flash('error', 'Something went wrong, please try again.');
+            return res.redirect('back');
         }
     } else {
-        req.flash('error','Unauthorized')
-        return res.status(401).send("Unauthorized");
+        req.flash('error', 'Unauthorized');
+        return res.status(401).send('Unauthorized');
     }
+};
 
-
-
-}
     //     const user = await User.findByIdAndUpdate(req.params.id, req.body);
     //         req.flash('success', 'Updated!');
     //         return res.redirect('back');

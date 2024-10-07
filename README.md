@@ -1,51 +1,48 @@
 # Codeial - Social app
 
 ## Introduction
-A full-stack social media website made using Frontend and Backend technologies. Users can add, delete, edit posts and comments if Authenticated and Authorised
+-A full-stack social media website made using Frontend and Backend technologies. Users can add, delete, edit posts and comments if Authenticated and Authorised
 
 ## 🔗 Important Links
 
 > ## Checkout the Website [Web Application](https://codeial-app-ho5g.onrender.com)
->
-
 
 <br/>
-
 ## Features
 
-Authentication:
+- **Authentication**
 
-User login with username and password
-Authorization :
+-User login with username and password
 
-One cannot manage posts and view user profile without being authenticated
+- **Authorization**
+-One cannot manage posts and view user profile without being authenticated
 
-One cannot edit or delete posts and comments created by other users
+-One cannot edit or delete posts and comments created by other users
 
-Manage User with basic functionalities:
+- **Manage User with basic functionalities:**
 
-Create and delete posts and comments
+-Create and delete posts and comments
 
-Upload User avatar
+-Upload User avatar
 
-Edit user name and email
+-Edit user name and email
 
-Add/Remove friends
+-Add/Remove friends
 
-One can like posts and comments on the feed
+-One can like posts and comments on the feed
 
-Users can chat with their Friends using chatting Engine
+-Users can chat with their Friends using chatting Engine
 
-API:
+-**API:**
+-v1 API is made for adding and deleting the post
 
-v1 API is made for adding and deleting the post
-Flash Messages:
+-**Flash Messages:**
 
-Flash Messages pop up on sign-in / sign-out
-Adding/Deleting Posts,Comments
-Mailer:
+-Flash Messages pop up on sign-in / sign-out
+-Adding/Deleting Posts,Comments
 
-User gets mail on the specified email id upon commenting
+-**Mailer:**
+-User gets mail on the specified email id upon commenting
 
 
 
@@ -89,14 +86,13 @@ User gets mail on the specified email id upon commenting
 - mongoose
 - multer
 - node-sass-middleware
+- nodeMailer
 - nodemon
 - noty
 - passport
 - passport-google-oauth
 - passport-github
 - passport-local
-
-
 - Framework: ExpressJS, Bootstrap
 - Database: MongoDB
 - Version Control System: Git

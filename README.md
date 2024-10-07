@@ -33,15 +33,17 @@
 
 -Users can chat with their Friends using chatting Engine
 
--**API:**
+- **API:**
+  
 -v1 API is made for adding and deleting the post
 
--**Flash Messages:**
+- **Flash Messages:**
 
 -Flash Messages pop up on sign-in / sign-out
 -Adding/Deleting Posts,Comments
 
--**Mailer:**
+- **Mailer:**
+  
 -User gets mail on the specified email id upon commenting
 
 
